@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Assignment_2
 {
@@ -62,8 +63,42 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new List<int>(); // Placeholder
+                // Initializing result list to store missing numbers
+                List<int> missingNumbers = new List<int>();
+
+                // Getting length of array
+                int n = nums.Length;
+
+                // Step 1: Marking visited elements
+                // I will use the array itself to mark visited numbers
+                // For each number i, I'll make nums[i-1] negative
+                for (int i = 0; i < n; i++)
+                {
+                    // Getting the absolute value since number might already be negative
+                    int num = Math.Abs(nums[i]);
+                    // Subtracting 1 because array is 0-based but numbers start from 1
+                    int index = num - 1;
+
+                    // Making the number at index negative to mark as visited
+                    // Only if it's positive (to avoid marking twice)
+                    if (nums[index] > 0)
+                    {
+                        nums[index] = -nums[index];
+                    }
+                }
+
+                // Step 2: Finding missing numbers
+                // If a number at index i is positive, then i+1 is missing
+                for (int i = 0; i < n; i++)
+                {
+                    if (nums[i] > 0)
+                    {
+                        // Adding missing number (i+1) to result
+                        missingNumbers.Add(i + 1);
+                    }
+                }
+
+                return missingNumbers;
             }
             catch (Exception)
             {
