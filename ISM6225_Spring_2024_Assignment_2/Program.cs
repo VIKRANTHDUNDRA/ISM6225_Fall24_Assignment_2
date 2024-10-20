@@ -112,34 +112,27 @@ namespace Assignment_2
         {
             try
             {
+                int left = 0;
+                int right = nums.Length - 1;
 
-                // Create new array for result
-                int[] result = new int[nums.Length];
-                int evenIndex = 0;
-                int oddIndex = nums.Length - 1;
-
-                // First pass: collect even numbers in order
-                for (int i = 0; i < nums.Length; i++)
+                // Two-pointer approach to sort in-place
+                while (left < right)
                 {
-                    if (nums[i] % 2 == 0)
+                    // Find odd number from left
+                    while (left < right && nums[left] % 2 == 0)
+                        left++;
+
+                    // Find even number from right
+                    while (left < right && nums[right] % 2 == 1)
+                        right--;
+
+                    // Swap numbers if pointers haven't crossed
+                    if (left < right)
                     {
-                        result[evenIndex++] = nums[i];
+                        int temp = nums[left];
+                        nums[left] = nums[right];
+                        nums[right] = temp;
                     }
-                }
-
-                // Second pass: collect odd numbers in original order
-                for (int i = 0; i < nums.Length; i++)
-                {
-                    if (nums[i] % 2 == 1)
-                    {
-                        result[oddIndex--] = nums[i];
-                    }
-                }
-
-                // Copy result back to original array
-                for (int i = 0; i < nums.Length; i++)
-                {
-                    nums[i] = result[i];
                 }
 
                 return nums;
