@@ -107,12 +107,37 @@ namespace Assignment_2
         }
 
         // Question 2: Sort Array by Parity
+        
         public static int[] SortArrayByParity(int[] nums)
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                // Initializing two pointers: left starts from beginning, right from end
+                int left = 0;
+                int right = nums.Length - 1;
+
+                // Continuing until pointers meet
+                while (left < right)
+                {
+                    // Moving left pointer until we find an odd number
+                    while (left < right && nums[left] % 2 == 0)
+                        left++;
+
+                    // Moving right pointer until we find an even number
+                    while (left < right && nums[right] % 2 == 1)
+                        right--;
+
+                    // Swapping the numbers if pointers haven't crossed
+                    if (left < right)
+                    {
+                        // Swapping using temporary variable
+                        int temp = nums[left];
+                        nums[left] = nums[right];
+                        nums[right] = temp;
+                    }
+                }
+
+                return nums;
             }
             catch (Exception)
             {
