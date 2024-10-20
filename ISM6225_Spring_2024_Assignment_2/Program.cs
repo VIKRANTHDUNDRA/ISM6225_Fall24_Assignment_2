@@ -283,12 +283,12 @@ namespace Assignment_2
                 if (x < 0)
                     return false;
 
-                // Convert to string for easy comparison
+                // Converting to string for easy comparison
                 string numStr = x.ToString();
                 int left = 0;
                 int right = numStr.Length - 1;
 
-                // Compare characters from both ends
+                // Comparing characters from both ends
                 while (left < right)
                 {
                     if (numStr[left] != numStr[right])
@@ -310,8 +310,23 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                // Base cases
+                if (n <= 1)
+                    return n;
+
+                // Using iteration to avoid stack overflow with recursion
+                int prev1 = 1;  // F(n-1)
+                int prev2 = 0;  // F(n-2)
+                int current = 0;
+
+                for (int i = 2; i <= n; i++)
+                {
+                    current = prev1 + prev2;
+                    prev2 = prev1;
+                    prev1 = current;
+                }
+
+                return current;
             }
             catch (Exception)
             {
