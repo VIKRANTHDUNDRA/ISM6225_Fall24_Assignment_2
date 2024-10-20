@@ -279,8 +279,25 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return false; // Placeholder
+                // Negative numbers are not palindromes
+                if (x < 0)
+                    return false;
+
+                // Convert to string for easy comparison
+                string numStr = x.ToString();
+                int left = 0;
+                int right = numStr.Length - 1;
+
+                // Compare characters from both ends
+                while (left < right)
+                {
+                    if (numStr[left] != numStr[right])
+                        return false;
+                    left++;
+                    right--;
+                }
+
+                return true;
             }
             catch (Exception)
             {
