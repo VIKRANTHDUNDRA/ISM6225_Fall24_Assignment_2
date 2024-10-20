@@ -16,7 +16,7 @@ namespace Assignment_2
 
             // Question 2: Sort Array by Parity
             Console.WriteLine("Question 2:");
-            int[] nums2 = { 3, 1, 2, 4 };
+            int[] nums2 = { 0, 1, 2 };
             int[] sortedArray = SortArrayByParity(nums2);
             Console.WriteLine(string.Join(",", sortedArray));
 
@@ -107,34 +107,39 @@ namespace Assignment_2
         }
 
         // Question 2: Sort Array by Parity
-        
+
         public static int[] SortArrayByParity(int[] nums)
         {
             try
             {
-                // Initializing two pointers: left starts from beginning, right from end
-                int left = 0;
-                int right = nums.Length - 1;
 
-                // Continuing until pointers meet
-                while (left < right)
+                // Create new array for result
+                int[] result = new int[nums.Length];
+                int evenIndex = 0;
+                int oddIndex = nums.Length - 1;
+
+                // First pass: collect even numbers in order
+                for (int i = 0; i < nums.Length; i++)
                 {
-                    // Moving left pointer until we find an odd number
-                    while (left < right && nums[left] % 2 == 0)
-                        left++;
-
-                    // Moving right pointer until we find an even number
-                    while (left < right && nums[right] % 2 == 1)
-                        right--;
-
-                    // Swapping the numbers if pointers haven't crossed
-                    if (left < right)
+                    if (nums[i] % 2 == 0)
                     {
-                        // Swapping using temporary variable
-                        int temp = nums[left];
-                        nums[left] = nums[right];
-                        nums[right] = temp;
+                        result[evenIndex++] = nums[i];
                     }
+                }
+
+                // Second pass: collect odd numbers in original order
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (nums[i] % 2 == 1)
+                    {
+                        result[oddIndex--] = nums[i];
+                    }
+                }
+
+                // Copy result back to original array
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    nums[i] = result[i];
                 }
 
                 return nums;
@@ -150,8 +155,29 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                // Using Dictionary to store complements
+                Dictionary<int, int> numMap = new Dictionary<int, int>();
+
+                // Iterating through array once
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    int complement = target - nums[i];
+
+                    // If complement exists in map, we found our pair
+                    if (numMap.ContainsKey(complement))
+                    {
+                        return new int[] { numMap[complement], i };
+                    }
+
+                    // Adding current number and its index to map if not already present
+                    if (!numMap.ContainsKey(nums[i]))
+                    {
+                        numMap.Add(nums[i], i);
+                    }
+                }
+
+                // No solution found
+                return new int[0];
             }
             catch (Exception)
             {
@@ -164,8 +190,17 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                // Sorting array to get largest and smallest numbers
+                Array.Sort(nums);
+                int n = nums.Length;
+
+                // Return max of:
+                // 1. Product of three largest numbers
+                // 2. Product of two smallest numbers (could be negative) and largest number
+                return Math.Max(
+                    nums[n - 1] * nums[n - 2] * nums[n - 3],
+                    nums[0] * nums[1] * nums[n - 1]
+                );
             }
             catch (Exception)
             {
@@ -178,8 +213,20 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return "101010"; // Placeholder
+                if (decimalNumber == 0)
+                    return "0";
+
+                // Using StringBuilder for efficient string manipulation
+                System.Text.StringBuilder binary = new System.Text.StringBuilder();
+
+                while (decimalNumber > 0)
+                {
+                    // Adding remainder (0 or 1) to start of string
+                    binary.Insert(0, decimalNumber % 2);
+                    decimalNumber /= 2;
+                }
+
+                return binary.ToString();
             }
             catch (Exception)
             {
